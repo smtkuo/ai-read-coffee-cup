@@ -1,0 +1,1334 @@
+<html class="">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.FontAwesomeConfig = {
+            autoReplaceSvg: 'nest', // Options: 'nest', 'remove', 'replace'
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+    <style>
+        * {
+            font-family: "{{font}}",
+            sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .highlighted-section {
+            outline: 2px solid #3F20FB;
+            background-color: rgba(63, 32, 251, 0.1);
+        }
+
+        .edit-button {
+            position: absolute;
+            z-index: 1000;
+        }
+
+        :root {
+            /* Base colors */
+            --color-base: #ffffff;
+            --color-base-50: #f9fafb;
+            --color-base-100: #f3f4f6;
+            --color-base-200: #e5e7eb;
+            --color-base-300: #d1d5db;
+            --color-base-400: #9ca3af;
+            --color-base-500: #6b7280;
+            --color-base-600: #4b5563;
+            --color-base-700: #374151;
+            --color-base-800: #1f2937;
+            --color-base-900: #111827;
+            --color-base-content: #1f2937;
+
+            /* Primary colors */
+            --color-primary: #3b82f6;
+            --color-primary-50: #eff6ff;
+            --color-primary-100: #dbeafe;
+            --color-primary-200: #bfdbfe;
+            --color-primary-300: #93c5fd;
+            --color-primary-400: #60a5fa;
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-primary-700: #1d4ed8;
+            --color-primary-800: #1e40af;
+            --color-primary-900: #1e3a8a;
+            --color-primary-focus: #2563eb;
+            --color-primary-content: #ffffff;
+
+            /* Secondary colors */
+            --color-secondary: #8b5cf6;
+            --color-secondary-50: #f5f3ff;
+            --color-secondary-100: #ede9fe;
+            --color-secondary-200: #ddd6fe;
+            --color-secondary-300: #c4b5fd;
+            --color-secondary-400: #a78bfa;
+            --color-secondary-500: #8b5cf6;
+            --color-secondary-600: #7c3aed;
+            --color-secondary-700: #6d28d9;
+            --color-secondary-800: #5b21b6;
+            --color-secondary-900: #4c1d95;
+            --color-secondary-focus: #7c3aed;
+            --color-secondary-content: #ffffff;
+
+            /* Accent colors */
+            --color-accent: #f472b6;
+            --color-accent-50: #fdf2f8;
+            --color-accent-100: #fce7f3;
+            --color-accent-200: #fbcfe8;
+            --color-accent-300: #f9a8d4;
+            --color-accent-400: #f472b6;
+            --color-accent-500: #ec4899;
+            --color-accent-600: #db2777;
+            --color-accent-700: #be185d;
+            --color-accent-800: #9d174d;
+            --color-accent-900: #831843;
+            --color-accent-focus: #db2777;
+            --color-accent-content: #ffffff;
+
+            /* Neutral colors */
+            --color-neutral: #6b7280;
+            --color-neutral-50: #f9fafb;
+            --color-neutral-100: #f3f4f6;
+            --color-neutral-200: #e5e7eb;
+            --color-neutral-300: #d1d5db;
+            --color-neutral-400: #9ca3af;
+            --color-neutral-500: #6b7280;
+            --color-neutral-600: #4b5563;
+            --color-neutral-700: #374151;
+            --color-neutral-800: #1f2937;
+            --color-neutral-900: #111827;
+            --color-neutral-focus: #4b5563;
+            --color-neutral-content: #ffffff;
+
+            /* Info colors */
+            --color-info: #3b82f6;
+            --color-info-50: #eff6ff;
+            --color-info-100: #dbeafe;
+            --color-info-200: #bfdbfe;
+            --color-info-300: #93c5fd;
+            --color-info-400: #60a5fa;
+            --color-info-500: #3b82f6;
+            --color-info-600: #2563eb;
+            --color-info-700: #1d4ed8;
+            --color-info-800: #1e40af;
+            --color-info-900: #1e3a8a;
+            --color-info-focus: #2563eb;
+            --color-info-content: #ffffff;
+
+            /* Success colors */
+            --color-success: #10b981;
+            --color-success-50: #ecfdf5;
+            --color-success-100: #d1fae5;
+            --color-success-200: #a7f3d0;
+            --color-success-300: #6ee7b7;
+            --color-success-400: #34d399;
+            --color-success-500: #10b981;
+            --color-success-600: #059669;
+            --color-success-700: #047857;
+            --color-success-800: #065f46;
+            --color-success-900: #064e3b;
+            --color-success-focus: #059669;
+            --color-success-content: #ffffff;
+
+            /* Warning colors */
+            --color-warning: #f59e0b;
+            --color-warning-50: #fffbeb;
+            --color-warning-100: #fef3c7;
+            --color-warning-200: #fde68a;
+            --color-warning-300: #fcd34d;
+            --color-warning-400: #fbbf24;
+            --color-warning-500: #f59e0b;
+            --color-warning-600: #d97706;
+            --color-warning-700: #b45309;
+            --color-warning-800: #92400e;
+            --color-warning-900: #78350f;
+            --color-warning-focus: #d97706;
+            --color-warning-content: #ffffff;
+
+            /* Error colors */
+            --color-error: #ef4444;
+            --color-error-50: #fef2f2;
+            --color-error-100: #fee2e2;
+            --color-error-200: #fecaca;
+            --color-error-300: #fca5a5;
+            --color-error-400: #f87171;
+            --color-error-500: #ef4444;
+            --color-error-600: #dc2626;
+            --color-error-700: #b91c1c;
+            --color-error-800: #991b1b;
+            --color-error-900: #7f1d1d;
+            --color-error-focus: #dc2626;
+            --color-error-content: #ffffff;
+        }
+
+        /* Dark theme */
+        .dark {
+            /* Base colors */
+            --color-base: #1f2937;
+            --color-base-50: #111827;
+            --color-base-100: #1f2937;
+            --color-base-200: #374151;
+            --color-base-300: #4b5563;
+            --color-base-400: #6b7280;
+            --color-base-500: #9ca3af;
+            --color-base-600: #d1d5db;
+            --color-base-700: #e5e7eb;
+            --color-base-800: #f3f4f6;
+            --color-base-900: #f9fafb;
+            --color-base-content: #f9fafb;
+
+            /* Primary colors */
+            --color-primary: #60a5fa;
+            --color-primary-50: #1e3a8a;
+            --color-primary-100: #1e40af;
+            --color-primary-200: #1d4ed8;
+            --color-primary-300: #2563eb;
+            --color-primary-400: #3b82f6;
+            --color-primary-500: #60a5fa;
+            --color-primary-600: #93c5fd;
+            --color-primary-700: #bfdbfe;
+            --color-primary-800: #dbeafe;
+            --color-primary-900: #eff6ff;
+            --color-primary-focus: #3b82f6;
+            --color-primary-content: #1f2937;
+
+            /* Secondary colors */
+            --color-secondary: #a78bfa;
+            --color-secondary-50: #4c1d95;
+            --color-secondary-100: #5b21b6;
+            --color-secondary-200: #6d28d9;
+            --color-secondary-300: #7c3aed;
+            --color-secondary-400: #8b5cf6;
+            --color-secondary-500: #a78bfa;
+            --color-secondary-600: #c4b5fd;
+            --color-secondary-700: #ddd6fe;
+            --color-secondary-800: #ede9fe;
+            --color-secondary-900: #f5f3ff;
+            --color-secondary-focus: #8b5cf6;
+            --color-secondary-content: #1f2937;
+
+            /* Accent colors */
+            --color-accent: #f472b6;
+            --color-accent-50: #831843;
+            --color-accent-100: #9d174d;
+            --color-accent-200: #be185d;
+            --color-accent-300: #db2777;
+            --color-accent-400: #ec4899;
+            --color-accent-500: #f472b6;
+            --color-accent-600: #f9a8d4;
+            --color-accent-700: #fbcfe8;
+            --color-accent-800: #fce7f3;
+            --color-accent-900: #fdf2f8;
+            --color-accent-focus: #ec4899;
+            --color-accent-content: #1f2937;
+
+            /* Neutral colors remain the same as light theme */
+
+            /* Info colors */
+            --color-info: #60a5fa;
+            --color-info-50: #1e3a8a;
+            --color-info-100: #1e40af;
+            --color-info-200: #1d4ed8;
+            --color-info-300: #2563eb;
+            --color-info-400: #3b82f6;
+            --color-info-500: #60a5fa;
+            --color-info-600: #93c5fd;
+            --color-info-700: #bfdbfe;
+            --color-info-800: #dbeafe;
+            --color-info-900: #eff6ff;
+            --color-info-focus: #3b82f6;
+            --color-info-content: #1f2937;
+
+            /* Success colors */
+            --color-success: #34d399;
+            --color-success-50: #064e3b;
+            --color-success-100: #065f46;
+            --color-success-200: #047857;
+            --color-success-300: #059669;
+            --color-success-400: #10b981;
+            --color-success-500: #34d399;
+            --color-success-600: #6ee7b7;
+            --color-success-700: #a7f3d0;
+            --color-success-800: #d1fae5;
+            --color-success-900: #ecfdf5;
+            --color-success-focus: #10b981;
+            --color-success-content: #1f2937;
+
+            /* Warning colors */
+            --color-warning: #fbbf24;
+            --color-warning-50: #78350f;
+            --color-warning-100: #92400e;
+            --color-warning-200: #b45309;
+            --color-warning-300: #d97706;
+            --color-warning-400: #f59e0b;
+            --color-warning-500: #fbbf24;
+            --color-warning-600: #fcd34d;
+            --color-warning-700: #fde68a;
+            --color-warning-800: #fef3c7;
+            --color-warning-900: #fffbeb;
+            --color-warning-focus: #f59e0b;
+            --color-warning-content: #1f2937;
+
+            /* Error colors */
+            --color-error: #f87171;
+            --color-error-50: #7f1d1d;
+            --color-error-100: #991b1b;
+            --color-error-200: #b91c1c;
+            --color-error-300: #dc2626;
+            --color-error-400: #ef4444;
+            --color-error-500: #f87171;
+            --color-error-600: #fca5a5;
+            --color-error-700: #fecaca;
+            --color-error-800: #fee2e2;
+            --color-error-900: #fef2f2;
+            --color-error-focus: #ef4444;
+            --color-error-content: #1f2937;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Default Tailwind colors
+                        transparent: 'transparent',
+                        current: 'currentColor',
+                        black: '#000000',
+                        white: '#ffffff',
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        },
+                        red: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                        yellow: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        green: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        blue: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        indigo: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        },
+                        purple: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        },
+
+                        // Custom color schemes
+                        base: {
+                            DEFAULT: 'var(--color-base)',
+                            50: 'var(--color-base-50)',
+                            100: 'var(--color-base-100)',
+                            200: 'var(--color-base-200)',
+                            300: 'var(--color-base-300)',
+                            400: 'var(--color-base-400)',
+                            500: 'var(--color-base-500)',
+                            600: 'var(--color-base-600)',
+                            700: 'var(--color-base-700)',
+                            800: 'var(--color-base-800)',
+                            900: 'var(--color-base-900)',
+                            content: 'var(--color-base-content)',
+                        },
+                        primary: {
+                            DEFAULT: 'var(--color-primary)',
+                            50: 'var(--color-primary-50)',
+                            100: 'var(--color-primary-100)',
+                            200: 'var(--color-primary-200)',
+                            300: 'var(--color-primary-300)',
+                            400: 'var(--color-primary-400)',
+                            500: 'var(--color-primary-500)',
+                            600: 'var(--color-primary-600)',
+                            700: 'var(--color-primary-700)',
+                            800: 'var(--color-primary-800)',
+                            900: 'var(--color-primary-900)',
+                            focus: 'var(--color-primary-focus)',
+                            content: 'var(--color-primary-content)',
+                        },
+                        secondary: {
+                            DEFAULT: 'var(--color-secondary)',
+                            50: 'var(--color-secondary-50)',
+                            100: 'var(--color-secondary-100)',
+                            200: 'var(--color-secondary-200)',
+                            300: 'var(--color-secondary-300)',
+                            400: 'var(--color-secondary-400)',
+                            500: 'var(--color-secondary-500)',
+                            600: 'var(--color-secondary-600)',
+                            700: 'var(--color-secondary-700)',
+                            800: 'var(--color-secondary-800)',
+                            900: 'var(--color-secondary-900)',
+                            focus: 'var(--color-secondary-focus)',
+                            content: 'var(--color-secondary-content)',
+                        },
+                        accent: {
+                            DEFAULT: 'var(--color-accent)',
+                            50: 'var(--color-accent-50)',
+                            100: 'var(--color-accent-100)',
+                            200: 'var(--color-accent-200)',
+                            300: 'var(--color-accent-300)',
+                            400: 'var(--color-accent-400)',
+                            500: 'var(--color-accent-500)',
+                            600: 'var(--color-accent-600)',
+                            700: 'var(--color-accent-700)',
+                            800: 'var(--color-accent-800)',
+                            900: 'var(--color-accent-900)',
+                            focus: 'var(--color-accent-focus)',
+                            content: 'var(--color-accent-content)',
+                        },
+                        neutral: {
+                            DEFAULT: 'var(--color-neutral)',
+                            50: 'var(--color-neutral-50)',
+                            100: 'var(--color-neutral-100)',
+                            200: 'var(--color-neutral-200)',
+                            300: 'var(--color-neutral-300)',
+                            400: 'var(--color-neutral-400)',
+                            500: 'var(--color-neutral-500)',
+                            600: 'var(--color-neutral-600)',
+                            700: 'var(--color-neutral-700)',
+                            800: 'var(--color-neutral-800)',
+                            900: 'var(--color-neutral-900)',
+                            focus: 'var(--color-neutral-focus)',
+                            content: 'var(--color-neutral-content)',
+                        },
+                        info: {
+                            DEFAULT: 'var(--color-info)',
+                            50: 'var(--color-info-50)',
+                            100: 'var(--color-info-100)',
+                            200: 'var(--color-info-200)',
+                            300: 'var(--color-info-300)',
+                            400: 'var(--color-info-400)',
+                            500: 'var(--color-info-500)',
+                            600: 'var(--color-info-600)',
+                            700: 'var(--color-info-700)',
+                            800: 'var(--color-info-800)',
+                            900: 'var(--color-info-900)',
+                            focus: 'var(--color-info-focus)',
+                            content: 'var(--color-info-content)',
+                        },
+                        success: {
+                            DEFAULT: 'var(--color-success)',
+                            50: 'var(--color-success-50)',
+                            100: 'var(--color-success-100)',
+                            200: 'var(--color-success-200)',
+                            300: 'var(--color-success-300)',
+                            400: 'var(--color-success-400)',
+                            500: 'var(--color-success-500)',
+                            600: 'var(--color-success-600)',
+                            700: 'var(--color-success-700)',
+                            800: 'var(--color-success-800)',
+                            900: 'var(--color-success-900)',
+                            focus: 'var(--color-success-focus)',
+                            content: 'var(--color-success-content)',
+                        },
+                        warning: {
+                            DEFAULT: 'var(--color-warning)',
+                            50: 'var(--color-warning-50)',
+                            100: 'var(--color-warning-100)',
+                            200: 'var(--color-warning-200)',
+                            300: 'var(--color-warning-300)',
+                            400: 'var(--color-warning-400)',
+                            500: 'var(--color-warning-500)',
+                            600: 'var(--color-warning-600)',
+                            700: 'var(--color-warning-700)',
+                            800: 'var(--color-warning-800)',
+                            900: 'var(--color-warning-900)',
+                            focus: 'var(--color-warning-focus)',
+                            content: 'var(--color-warning-content)',
+                        },
+                        error: {
+                            DEFAULT: 'var(--color-error)',
+                            50: 'var(--color-error-50)',
+                            100: 'var(--color-error-100)',
+                            200: 'var(--color-error-200)',
+                            300: 'var(--color-error-300)',
+                            400: 'var(--color-error-400)',
+                            500: 'var(--color-error-500)',
+                            600: 'var(--color-error-600)',
+                            700: 'var(--color-error-700)',
+                            800: 'var(--color-error-800)',
+                            900: 'var(--color-error-900)',
+                            focus: 'var(--color-error-focus)',
+                            content: 'var(--color-error-content)',
+                        },
+                        // Aliases
+                        danger: {
+                            DEFAULT: 'var(--color-error)',
+                            50: 'var(--color-error-50)',
+                            100: 'var(--color-error-100)',
+                            200: 'var(--color-error-200)',
+                            300: 'var(--color-error-300)',
+                            400: 'var(--color-error-400)',
+                            500: 'var(--color-error-500)',
+                            600: 'var(--color-error-600)',
+                            700: 'var(--color-error-700)',
+                            800: 'var(--color-error-800)',
+                            900: 'var(--color-error-900)',
+                            focus: 'var(--color-error-focus)',
+                            content: 'var(--color-error-content)',
+                        },
+                        failure: {
+                            DEFAULT: 'var(--color-error)',
+                            50: 'var(--color-error-50)',
+                            100: 'var(--color-error-100)',
+                            200: 'var(--color-error-200)',
+                            300: 'var(--color-error-300)',
+                            400: 'var(--color-error-400)',
+                            500: 'var(--color-error-500)',
+                            600: 'var(--color-error-600)',
+                            700: 'var(--color-error-700)',
+                            800: 'var(--color-error-800)',
+                            900: 'var(--color-error-900)',
+                            focus: 'var(--color-error-focus)',
+                            content: 'var(--color-error-content)',
+                        },
+                    },
+                },
+            },
+            variants: {
+                extend: {
+                    backgroundColor: ['active', 'group-hover'],
+                    textColor: ['active', 'group-hover'],
+                },
+            },
+            plugins: [],
+        };
+    </script>
+
+    <script>
+        let appState = {
+            inputs: {
+                imageUrl: '',
+                language: 'en',
+                apiKey: '',
+                uploadedImage: null
+            },
+            response: null
+        };
+
+        function showLoading() {
+            document.getElementById('loading-overlay').classList.remove('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-overlay').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+        }
+
+        function updateURL() {
+            const stateStr = JSON.stringify(appState);
+            const base64State = btoa(encodeURIComponent(stateStr));
+            window.location.hash = base64State;
+        }
+
+        function loadStateFromURL() {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                try {
+                    const stateStr = decodeURIComponent(atob(hash));
+                    appState = JSON.parse(stateStr);
+                    
+                    // Restore inputs
+                    document.getElementById('image-url').value = appState.inputs.imageUrl || '';
+                    document.getElementById('language-select').value = appState.inputs.language || 'en';
+                    document.getElementById('api-key').value = appState.inputs.apiKey || '';
+                    
+                    // Restore image preview if exists
+                    if (appState.inputs.uploadedImage) {
+                        const previewImg = document.getElementById('image-preview');
+                        previewImg.src = appState.inputs.uploadedImage;
+                        previewImg.classList.remove('hidden');
+                        document.getElementById('remove-image').classList.remove('hidden');
+                        document.getElementById('drop-text').textContent = 'Image loaded from URL';
+                    }
+                    
+                    // Restore response if exists
+                    if (appState.response) {
+                        updateUI(JSON.stringify(appState.response));
+                    }
+                } catch (error) {
+                    console.error('Failed to load state from URL:', error);
+                }
+            }
+        }
+
+        // Update input handlers
+        function handleInputChange() {
+            appState.inputs.imageUrl = document.getElementById('image-url').value;
+            appState.inputs.language = document.getElementById('language-select').value;
+            appState.inputs.apiKey = document.getElementById('api-key').value;
+            updateURL();
+        }
+
+        function handleFile(file) {
+            if (!file) return;
+
+            // Check file type
+            if (!file.type.startsWith('image/')) {
+                showNotification('Please upload an image file', 'error');
+                return;
+            }
+
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('File size should be less than 5MB', 'error');
+                return;
+            }
+
+            // Show preview
+            const previewImg = document.getElementById('image-preview');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewImg.classList.remove('hidden');
+                document.getElementById('remove-image').classList.remove('hidden');
+                
+                // Store image in state
+                appState.inputs.uploadedImage = e.target.result;
+                updateURL();
+            }
+            reader.readAsDataURL(file);
+            
+            // Update drop zone text
+            document.getElementById('drop-text').textContent = file.name;
+        }
+
+        function removeImage() {
+            const previewImg = document.getElementById('image-preview');
+            const fileInput = document.getElementById('file-input');
+            const removeBtn = document.getElementById('remove-image');
+            
+            previewImg.src = '';
+            previewImg.classList.add('hidden');
+            fileInput.value = '';
+            removeBtn.classList.add('hidden');
+            document.getElementById('drop-text').textContent = 'Drag and drop your image here or';
+            
+            // Clear image from state
+            appState.inputs.uploadedImage = null;
+            updateURL();
+        }
+
+        // Drag and drop handlers
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.currentTarget.classList.add('border-amber-500');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.currentTarget.classList.remove('border-amber-500');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.currentTarget.classList.remove('border-amber-500');
+
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        }
+
+        // Initialize drag and drop
+        function initializeDragAndDrop() {
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+            const chooseFileBtn = document.getElementById('choose-file-btn');
+
+            dropZone.addEventListener('dragover', handleDragOver);
+            dropZone.addEventListener('dragleave', handleDragLeave);
+            dropZone.addEventListener('drop', handleDrop);
+
+            chooseFileBtn.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        }
+
+        function updateUI(response) {
+            try {
+                const data = JSON.parse(response);
+                if (data.status === 'success') {
+                    // Store response in state
+                    appState.response = data;
+                    updateURL();
+
+                    // General Reading
+                    document.getElementById('summary-text').textContent = data.result.general_reading.summary;
+                    document.getElementById('mood-text').textContent = data.result.general_reading.mood;
+                    document.getElementById('energy-text').textContent = data.result.general_reading.energy;
+
+                    // Love and Relationships
+                    document.getElementById('love-current').textContent = data.result.love_and_relationships.current_situation;
+                    document.getElementById('love-future').textContent = data.result.love_and_relationships.future_prospects;
+                    document.getElementById('love-advice').textContent = data.result.love_and_relationships.advice;
+
+                    // Career and Finance
+                    document.getElementById('career-current').textContent = data.result.career_and_finance.current_path;
+                    document.getElementById('career-opportunities').textContent = data.result.career_and_finance.opportunities;
+                    document.getElementById('career-finance').textContent = data.result.career_and_finance.financial_outlook;
+                    document.getElementById('career-advice').textContent = data.result.career_and_finance.advice;
+
+                    // Health and Wellbeing
+                    document.getElementById('health-physical').textContent = data.result.health_and_wellbeing.physical_health;
+                    document.getElementById('health-mental').textContent = data.result.health_and_wellbeing.mental_health;
+                    document.getElementById('health-advice').textContent = data.result.health_and_wellbeing.advice;
+
+                    // Symbols
+                    const symbolsContainer = document.getElementById('symbols-container');
+                    symbolsContainer.innerHTML = '';
+                    data.result.symbols_detected.forEach(symbol => {
+                        symbolsContainer.innerHTML += `
+                            <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                                <i class="fa-solid fa-${getSymbolIcon(symbol.symbol)} 
+                                    text-${getSymbolColor(symbol.symbol)}-600 text-2xl mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium">${symbol.symbol}</h4>
+                                    <p class="text-sm text-gray-600">${symbol.meaning}</p>
+                                    <p class="text-xs text-gray-500">Location: ${symbol.location}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    // Timeline
+                    document.getElementById('timeline-near').textContent = data.result.timeline_predictions.near_future;
+                    document.getElementById('timeline-medium').textContent = data.result.timeline_predictions.medium_term;
+                    document.getElementById('timeline-long').textContent = data.result.timeline_predictions.long_term;
+
+                    // Lucky Elements
+                    document.getElementById('lucky-numbers').textContent = data.result.lucky_elements.numbers.join(', ');
+                    document.getElementById('lucky-colors').textContent = data.result.lucky_elements.colors.join(', ');
+                    document.getElementById('lucky-days').textContent = data.result.lucky_elements.days.join(', ');
+
+                    // Additional Insights
+                    document.getElementById('additional-insights').textContent = data.result.additional_insights;
+
+                    // Show results section
+                    document.getElementById('results-section').classList.remove('hidden');
+                } else {
+                    // Show error notification
+                    const errorMessage = data.details || data.message || 'Failed to analyze the image. Please try again.';
+                    showNotification(errorMessage, 'error');
+                    document.getElementById('results-section').classList.add('hidden');
+                }
+            } catch (error) {
+                showNotification('An error occurred while processing the response.', 'error');
+                document.getElementById('results-section').classList.add('hidden');
+            }
+        }
+
+        function getSymbolIcon(symbol) {
+            const iconMap = {
+                'Tree': 'tree',
+                'Bird': 'dove',
+                'Heart': 'heart',
+                'Star': 'star',
+                'Circle': 'circle',
+                'Wave': 'water',
+                'Mountain': 'mountain',
+                'Sun': 'sun',
+                'Moon': 'moon',
+                'Cross': 'cross',
+                'Triangle': 'triangle',
+                'Square': 'square',
+                'Spiral': 'spinner',
+                'Arrow': 'arrow-right',
+                'Key': 'key',
+                'Crown': 'crown',
+                'Flower': 'flower',
+                'Fish': 'fish',
+                'Bridge': 'bridge',
+                'House': 'house'
+            };
+            return iconMap[symbol] || 'shapes';
+        }
+
+        function getSymbolColor(symbol) {
+            const colorMap = {
+                'Tree': 'green',
+                'Bird': 'blue',
+                'Heart': 'red',
+                'Star': 'amber',
+                'Circle': 'purple',
+                'Wave': 'blue',
+                'Mountain': 'stone',
+                'Sun': 'yellow',
+                'Moon': 'indigo',
+                'Cross': 'gray',
+                'Triangle': 'emerald',
+                'Square': 'orange',
+                'Spiral': 'violet',
+                'Arrow': 'cyan',
+                'Key': 'gold',
+                'Crown': 'yellow',
+                'Flower': 'pink',
+                'Fish': 'sky',
+                'Bridge': 'slate',
+                'House': 'rose'
+            };
+            return colorMap[symbol] || 'gray';
+        }
+
+        function showNotification(message, type = 'error') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 flex items-start space-x-3 ${
+                type === 'error' ? 'bg-red-50 text-red-800 border border-red-200' : 'bg-green-50 text-green-800 border border-green-200'
+            }`;
+            
+            // Icon
+            const icon = document.createElement('div');
+            icon.className = 'flex-shrink-0 mt-0.5';
+            icon.innerHTML = type === 'error' 
+                ? '<i class="fas fa-exclamation-circle text-red-500"></i>'
+                : '<i class="fas fa-check-circle text-green-500"></i>';
+            
+            // Message container
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex-1';
+            messageDiv.textContent = message;
+            
+            // Close button
+            const closeButton = document.createElement('button');
+            closeButton.className = 'flex-shrink-0 ml-4 text-sm text-gray-400 hover:text-gray-600';
+            closeButton.innerHTML = '<i class="fas fa-times"></i>';
+            closeButton.onclick = () => notification.remove();
+            
+            notification.appendChild(icon);
+            notification.appendChild(messageDiv);
+            notification.appendChild(closeButton);
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 6 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 6000);
+        }
+
+        function analyzeCup() {
+            const imageUrl = document.getElementById('image-url').value;
+            const language = document.getElementById('language-select').value;
+            const apiKey = document.getElementById('api-key').value;
+            const imagePreview = document.getElementById('image-preview');
+            const fileInput = document.getElementById('file-input');
+
+            if (!apiKey) {
+                showNotification('Please enter your API key', 'error');
+                return;
+            }
+
+            if (!imageUrl && !imagePreview.src && !fileInput.files[0]) {
+                showNotification('Please provide an image URL or upload an image', 'error');
+                return;
+            }
+
+            showLoading();
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener('readystatechange', function () {
+                if (this.readyState === this.DONE) {
+                    hideLoading();
+                    if (this.status === 200) {
+                        updateUI(this.responseText);
+                    } else {
+                        showNotification('Failed to connect to the server. Please try again.', 'error');
+                    }
+                }
+            });
+
+            const formData = new FormData();
+            
+            if (fileInput.files[0]) {
+                formData.append('image', fileInput.files[0]);
+                xhr.open('POST', `https://coffee-fortune-teller-read-coffee-cup-personal-advice.p.rapidapi.com/analyzeCup?lang=${language}&noqueue=1`);
+            } else {
+                xhr.open('POST', `https://coffee-fortune-teller-read-coffee-cup-personal-advice.p.rapidapi.com/analyzeCup?imageUrl=${encodeURIComponent(imageUrl)}&lang=${language}&noqueue=1`);
+            }
+
+            xhr.setRequestHeader('x-rapidapi-key', apiKey);
+            xhr.setRequestHeader('x-rapidapi-host', 'coffee-fortune-teller-read-coffee-cup-personal-advice.p.rapidapi.com');
+
+            if (fileInput.files[0]) {
+                xhr.send(formData);
+            } else {
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send(null);
+            }
+        }
+
+        // Initialize when document is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDragAndDrop();
+            
+            // Add input change listeners
+            document.getElementById('image-url').addEventListener('input', handleInputChange);
+            document.getElementById('language-select').addEventListener('change', handleInputChange);
+            document.getElementById('api-key').addEventListener('input', handleInputChange);
+            
+            // Load state from URL if exists
+            loadStateFromURL();
+        });
+    </script>
+</head>
+
+<body class="h-full text-base-content">
+    <div id="main-container" class="bg-gray-50">
+        <!-- Error Message -->
+        <div id="error-message" class="hidden fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"></div>
+        
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-4 border-amber-600 border-t-transparent mx-auto mb-4"></div>
+                <p class="text-gray-700">Analyzing your coffee cup...</p>
+            </div>
+        </div>
+        <header id="header" class="bg-white shadow-sm py-4 px-6">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-mug-hot text-2xl text-amber-600"></i>
+                    <h1 class="text-xl font-semibold">Coffee Fortune Teller</h1>
+                </div>
+                <nav class="flex space-x-6">
+                    <a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="text-gray-600 hover:text-amber-600 cursor-pointer">Documentation</a>
+                    <a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice/pricing" target="_blank" class="text-gray-600 hover:text-amber-600 cursor-pointer">Pricing</a>
+                    <a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="text-gray-600 hover:text-amber-600 cursor-pointer">Support</a>
+                </nav>
+            </div>
+        </header>
+        <main class="max-w-7xl mx-auto py-8 px-4">
+            <section id="hero" class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Discover Your Future Through Coffee</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Upload your coffee cup image and let our AI reveal what the
+                    patterns foretell about your future.</p>
+            </section>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <section id="upload-section" class="space-y-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4">Upload Coffee Cup Image</h3>
+                        <div id="drop-zone" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center transition-colors duration-200">
+                            <input type="file" id="file-input" class="hidden" accept="image/*">
+                            <div class="relative">
+                                <img id="image-preview" class="hidden max-h-48 mx-auto mb-4 rounded-lg" alt="Preview">
+                                <button id="remove-image" onclick="removeImage()" class="hidden absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600">
+                                    <i class="fas fa-times text-sm"></i>
+                                </button>
+                            </div>
+                            <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-400 mb-4"></i>
+                            <p id="drop-text" class="text-gray-600 mb-4">Drag and drop your image here or</p>
+                            <button id="choose-file-btn" class="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700">Choose File</button>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Or paste image URL</label>
+                            <input type="text" id="image-url"
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                                placeholder="Enter image URL">
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4">Settings</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                                <select id="language-select"
+                                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                    <option value="ar">Arabic (العربية)</option>
+                                    <option value="bn">Bengali (বাংলা)</option>
+                                    <option value="bg">Bulgarian (български)</option>
+                                    <option value="zh">Chinese (中文)</option>
+                                    <option value="hr">Croatian (Hrvatski)</option>
+                                    <option value="cs">Czech (Čeština)</option>
+                                    <option value="da">Danish (Dansk)</option>
+                                    <option value="nl">Dutch (Nederlands)</option>
+                                    <option value="en" selected>English</option>
+                                    <option value="et">Estonian (Eesti)</option>
+                                    <option value="fi">Finnish (Suomi)</option>
+                                    <option value="fr">French (Français)</option>
+                                    <option value="de">German (Deutsch)</option>
+                                    <option value="el">Greek (Ελληνικά)</option>
+                                    <option value="hi">Hindi (हिन्दी)</option>
+                                    <option value="hu">Hungarian (Magyar)</option>
+                                    <option value="id">Indonesian (Bahasa Indonesia)</option>
+                                    <option value="it">Italian (Italiano)</option>
+                                    <option value="ja">Japanese (日本語)</option>
+                                    <option value="ko">Korean (한국어)</option>
+                                    <option value="lv">Latvian (Latviešu)</option>
+                                    <option value="lt">Lithuanian (Lietuvių)</option>
+                                    <option value="no">Norwegian (Norsk)</option>
+                                    <option value="pl">Polish (Polski)</option>
+                                    <option value="pt">Portuguese (Português)</option>
+                                    <option value="ro">Romanian (Română)</option>
+                                    <option value="ru">Russian (Русский)</option>
+                                    <option value="es">Spanish (Español)</option>
+                                    <option value="sv">Swedish (Svenska)</option>
+                                    <option value="tr">Turkish (Türkçe)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">API Key</label>
+                                <div class="flex space-x-2">
+                                    <input type="password" id="api-key"
+                                        class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                                        placeholder="Enter your API key">
+                                    <a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="bg-gray-100 px-4 py-2 rounded-lg hover:bg-gray-200">Get Key</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="analyzeCup()" class="w-full bg-amber-600 text-white py-3 rounded-lg hover:bg-amber-700 font-semibold">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Analyze Coffee Cup
+                    </button>
+                </section>
+                <section id="results-section" class="space-y-6">
+                    <!-- General Reading -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-eye text-amber-600 mr-2"></i>
+                            General Reading
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-amber-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-star text-amber-600 mr-2"></i>
+                                    <span class="font-medium">Summary</span>
+                                </div>
+                                <p id="summary-text" class="text-gray-600"></p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-blue-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-face-smile text-blue-600 mr-2"></i>
+                                        <span class="font-medium">Mood</span>
+                                    </div>
+                                    <p id="mood-text" class="text-gray-600"></p>
+                                </div>
+                                <div class="p-4 bg-green-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-bolt text-green-600 mr-2"></i>
+                                        <span class="font-medium">Energy</span>
+                                    </div>
+                                    <p id="energy-text" class="text-gray-600"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Love and Relationships -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-heart text-red-500 mr-2"></i>
+                            Love and Relationships
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-red-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-circle-info text-red-500 mr-2"></i>
+                                    <span class="font-medium">Current Situation</span>
+                                </div>
+                                <p id="love-current" class="text-gray-600"></p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-pink-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-crystal-ball text-pink-500 mr-2"></i>
+                                        <span class="font-medium">Future Prospects</span>
+                                    </div>
+                                    <p id="love-future" class="text-gray-600"></p>
+                                </div>
+                                <div class="p-4 bg-rose-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-comment-dots text-rose-500 mr-2"></i>
+                                        <span class="font-medium">Advice</span>
+                                    </div>
+                                    <p id="love-advice" class="text-gray-600"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Career and Finance -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-briefcase text-indigo-600 mr-2"></i>
+                            Career and Finance
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-indigo-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-road text-indigo-600 mr-2"></i>
+                                        <span class="font-medium">Current Path</span>
+                                    </div>
+                                    <p id="career-current" class="text-gray-600"></p>
+                                </div>
+                                <div class="p-4 bg-purple-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-door-open text-purple-600 mr-2"></i>
+                                        <span class="font-medium">Opportunities</span>
+                                    </div>
+                                    <p id="career-opportunities" class="text-gray-600"></p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-violet-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-coins text-violet-600 mr-2"></i>
+                                        <span class="font-medium">Financial Outlook</span>
+                                    </div>
+                                    <p id="career-finance" class="text-gray-600"></p>
+                                </div>
+                                <div class="p-4 bg-fuchsia-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-lightbulb text-fuchsia-600 mr-2"></i>
+                                        <span class="font-medium">Advice</span>
+                                    </div>
+                                    <p id="career-advice" class="text-gray-600"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Health and Wellbeing -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-heart-pulse text-emerald-600 mr-2"></i>
+                            Health and Wellbeing
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-4 bg-emerald-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-dumbbell text-emerald-600 mr-2"></i>
+                                        <span class="font-medium">Physical Health</span>
+                                    </div>
+                                    <p id="health-physical" class="text-gray-600"></p>
+                                </div>
+                                <div class="p-4 bg-teal-50 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fa-solid fa-brain text-teal-600 mr-2"></i>
+                                        <span class="font-medium">Mental Health</span>
+                                    </div>
+                                    <p id="health-mental" class="text-gray-600"></p>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-green-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-hand-holding-heart text-green-600 mr-2"></i>
+                                    <span class="font-medium">Advice</span>
+                                </div>
+                                <p id="health-advice" class="text-gray-600"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symbols -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-shapes text-amber-600 mr-2"></i>
+                            Symbols Detected
+                        </h3>
+                        <div id="symbols-container" class="space-y-4">
+                            <!-- Symbols will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-clock text-blue-600 mr-2"></i>
+                            Timeline Predictions
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-sky-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-calendar-day text-sky-600 mr-2"></i>
+                                    <span class="font-medium">Near Future</span>
+                                </div>
+                                <p id="timeline-near" class="text-gray-600"></p>
+                            </div>
+                            <div class="p-4 bg-cyan-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-calendar-week text-cyan-600 mr-2"></i>
+                                    <span class="font-medium">Medium Term</span>
+                                </div>
+                                <p id="timeline-medium" class="text-gray-600"></p>
+                            </div>
+                            <div class="p-4 bg-blue-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-calendar-alt text-blue-600 mr-2"></i>
+                                    <span class="font-medium">Long Term</span>
+                                </div>
+                                <p id="timeline-long" class="text-gray-600"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lucky Elements -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-rainbow text-amber-600 mr-2"></i>
+                            Lucky Elements
+                        </h3>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="p-4 bg-amber-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-hashtag text-amber-600 mr-2"></i>
+                                    <span class="font-medium">Numbers</span>
+                                </div>
+                                <p id="lucky-numbers" class="text-gray-600"></p>
+                            </div>
+                            <div class="p-4 bg-amber-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-palette text-amber-600 mr-2"></i>
+                                    <span class="font-medium">Colors</span>
+                                </div>
+                                <p id="lucky-colors" class="text-gray-600"></p>
+                            </div>
+                            <div class="p-4 bg-amber-50 rounded-lg">
+                                <div class="flex items-center mb-2">
+                                    <i class="fa-solid fa-calendar-check text-amber-600 mr-2"></i>
+                                    <span class="font-medium">Days</span>
+                                </div>
+                                <p id="lucky-days" class="text-gray-600"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Insights -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <i class="fa-solid fa-lightbulb text-yellow-600 mr-2"></i>
+                            Additional Insights
+                        </h3>
+                        <div class="p-4 bg-yellow-50 rounded-lg">
+                            <p id="additional-insights" class="text-gray-600"></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <footer id="footer" class="bg-gray-800 text-white py-8 mt-12">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="font-semibold mb-4">About</h4>
+                        <p class="text-gray-400 text-sm">Discover insights about your future through the ancient art of
+                            coffee cup reading, powered by AI.</p>
+                        <div class="flex space-x-4 mt-4">
+                            <a href="https://github.com/smtkuo/ai-read-coffee-cup" target="_blank" class="text-gray-400 hover:text-white">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/samet-utku-olgun/" target="_blank" class="text-gray-400 hover:text-white">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2 text-sm text-gray-400">
+                            <li><a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="hover:text-white cursor-pointer">Documentation</a></li>
+                            <li><a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="hover:text-white cursor-pointer">API Reference</a></li>
+                            <li><a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="hover:text-white cursor-pointer">Support</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-4">Legal</h4>
+                        <ul class="space-y-2 text-sm text-gray-400">
+                            <li><a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="hover:text-white cursor-pointer">Privacy Policy</a></li>
+                            <li><a href="https://rapidapi.com/ltdbilgisam/api/coffee-fortune-teller-read-coffee-cup-personal-advice" target="_blank" class="hover:text-white cursor-pointer">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
